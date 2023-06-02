@@ -17,6 +17,14 @@ public class Empresa implements Serializable {
     @Column(name = "nome_fantasia", nullable = false, length = 80)
     private String nomeFantasia;
 
+    public TipoEmpresa getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEmpresa tipo) {
+        this.tipo = tipo;
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private TipoEmpresa tipo;
