@@ -1,13 +1,27 @@
 package com.proex.erp.model;
 
-import javax.persistence.*;
-import  java.io.Serializable;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 @Entity
 @Table(name = "empresa")
 public class Empresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -16,18 +30,6 @@ public class Empresa implements Serializable {
 
     @Column(name = "nome_fantasia", nullable = false, length = 80)
     private String nomeFantasia;
-
-    public TipoEmpresa getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoEmpresa tipo) {
-        this.tipo = tipo;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private TipoEmpresa tipo;
 
     @Column(name = "razao_social", nullable = false, length = 120)
     private String razaoSocial;
@@ -43,6 +45,21 @@ public class Empresa implements Serializable {
     @JoinColumn(name = "ramo_atividade_id", nullable = false)
     private RamoAtividade ramoAtividade;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private TipoEmpresa tipo;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal faturamento;
+
+    public BigDecimal getFaturamento() {
+        return faturamento;
+    }
+
+    public void setFaturamento(BigDecimal faturamento) {
+        this.faturamento = faturamento;
+    }
+
     public Long getId() {
         return id;
     }
@@ -50,7 +67,6 @@ public class Empresa implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getNomeFantasia() {
         return nomeFantasia;
@@ -92,23 +108,41 @@ public class Empresa implements Serializable {
         this.ramoAtividade = ramoAtividade;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Empresa)) return false;
-        Empresa empresa = (Empresa) o;
-        return Objects.equals(getId(), empresa.getId());
+    public TipoEmpresa getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoEmpresa tipo) {
+        this.tipo = tipo;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Empresa other = (Empresa) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
     @Override
     public String toString() {
-        return "Empresa{" +
-                "id=" + id +
-                '}';
+        return "Empresa [id=" + id + "]";
     }
 }

@@ -1,6 +1,7 @@
 package com.proex.erp.model;
 
 public enum TipoEmpresa {
+
     MEI("Microempreendedor Individual"),
     EIRELI("Empresa Individual de Responsabilidade Limitada"),
     LTDA("Sociedade Limitada"),
@@ -15,4 +16,5 @@ public enum TipoEmpresa {
     public String getDescricao() {
         return descricao;
     }
+
 }
